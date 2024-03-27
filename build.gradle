@@ -2,3 +2,9 @@
 plugins {
 alias(libs.plugins.androidApplication) apply false
 }
+ext {
+    versionCode = 2
+    versionName = "1.0.1"
+    SDK = 34
+    minSDK = 19
+}
