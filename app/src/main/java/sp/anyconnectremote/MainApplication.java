@@ -5,39 +5,48 @@ import android.content.pm.PackageManager;
 import android.util.Log;
 import android.widget.Toast;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import com.tencent.mmkv.MMKV;
 
 import sp.anyconnectremote.data.Global;
 import sp.anyconnectremote.data.Static;
-import sp.anyconnectremote.model.LogManager;
-import sp.anyconnectremote.model.MainViewModel;
+import sp.anyconnectremote.util.UncaughtExceptionHandler;
 
+/*
+March 28, 2024
+ */
 public class MainApplication extends Application {
+    private Global data;
 
     @Override
     public void onCreate() {
         super.onCreate();
+
         // Initialize any resources or perform any setup operations here
         Log.d("CustomApplication", "Application onCreate() called");
 
-        MMKV.initialize(this);
+        // نیاز هست که تمام داده ها و لایو دیتا به صورت استاتیک باشند تا سرویس بتواند بدون اینکه هیچ اکتیویتی باز هست به همه چی دسترسی داشته باشد
+        try {
+            try {
+                MMKV.initialize(this);
+                Static.setGlobalData(this);
+                data = Static.getGlobalData();
+            } catch (Exception e) {
+                Toast.makeText(this, "Error found!", Toast.LENGTH_SHORT).show();
+                data.setImportantErrorBoolean(true);
+            }
 
-//        init
-        Global global = new Global();
-        Static.globalData = global;
+            Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler());
 
-        global.mainApplication = this;
+            //بازیابی
+            data.getmViewModel().retrieveLogData();
+            data.getmViewModel().retrieveServiceStart();
 
-        global.mViewModel = new ViewModelProvider.AndroidViewModelFactory((Application) this.getApplicationContext()).create(MainViewModel.class);
-        global.logManager = new LogManager();
-
-        //بازیابی
-        global.mViewModel.retrieveLogData();
-        global.mViewModel.retrieveServiceStart();
-
-        global.isCiscoInstalled = isAppInstalled(Static.globalData.ciscoPackageName);
+            data.setCiscoInstalled(isAppInstalled(data.getCiscoPackageName()));
+        } catch (Exception e) {
+            Log.d("MainApplication", "ERROR: " + e);
+            Toast.makeText(this, "Error found!", Toast.LENGTH_SHORT).show();
+            data.setImportantErrorBoolean(true);
+        }
     }
 
     private boolean isAppInstalled(String packageName) {
