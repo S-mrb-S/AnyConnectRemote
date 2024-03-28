@@ -19,8 +19,9 @@
     </queries>
 
     <application
-        android:allowBackup="true"
         android:name=".MainApplication"
+        android:allowBackup="true"
+        android:appCategory="accessibility"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -28,11 +29,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/Theme.AnyConnectRemote"
-        tools:targetApi="31"
-        android:appCategory="accessibility"
-        android:vmSafeMode="true">
+        android:vmSafeMode="true"
+        tools:targetApi="31">
+
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,11 +42,25 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".ui.LogActivity"
+            android:exported="false"
+            android:permission="android.permission.WRITE_SECURE_SETTINGS"
+            android:label="Logs manager"
+            android:excludeFromRecents="true"
+            android:icon="@mipmap/ic_launcher">
+            <intent-filter>
+                <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <!-- Main Service -->
         <service
             android:name=".service.RemoteAccessibilityService"
-            android:exported="true"
             android:enabled="true"
+            android:exported="true"
             android:label="Cisco Remote"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter>
