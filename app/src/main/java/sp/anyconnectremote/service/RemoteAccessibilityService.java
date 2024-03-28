@@ -7,8 +7,8 @@ import android.view.accessibility.AccessibilityNodeInfo;
 
 import java.util.List;
 
+import sp.anyconnectremote.data.Global;
 import sp.anyconnectremote.service.util.MainHelper;
-import sp.anyconnectremote.util.LogManager;
 
 /**
  * by Mehrab
@@ -19,7 +19,7 @@ public class RemoteAccessibilityService extends AccessibilityService {
     public void onCreate() {
         super.onCreate();
 
-        LogManager.saveLog("service created!");
+        Global.logManager.saveLog("service created!");
     }
 
     @Override
