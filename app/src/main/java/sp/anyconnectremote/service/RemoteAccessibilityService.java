@@ -7,10 +7,20 @@ import android.view.accessibility.AccessibilityNodeInfo;
 
 import java.util.List;
 
+import sp.anyconnectremote.service.util.MainHelper;
+import sp.anyconnectremote.util.LogManager;
+
 /**
  * by Mehrab
  */
 public class RemoteAccessibilityService extends AccessibilityService {
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        LogManager.saveLog("service created!");
+    }
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
@@ -26,7 +36,7 @@ public class RemoteAccessibilityService extends AccessibilityService {
             if (settingsButtons != null && !settingsButtons.isEmpty()) {
                 AccessibilityNodeInfo settingsButton = settingsButtons.get(0);
                 if (settingsButton != null) {
-                    performClickAction(settingsButton);
+                    MainHelper.performClickAction(settingsButton);
                     Log.d("On", "Peyda shd!!");
                 } else {
                     Log.d("On", "Peyda nshd 2!");
@@ -55,11 +65,7 @@ public class RemoteAccessibilityService extends AccessibilityService {
 
     }
 
-    private void performClickAction(AccessibilityNodeInfo node) {
-        // انجام عملیات کلیک مورد نظر
-        node.performAction(AccessibilityNodeInfo.ACTION_CLICK);
-        Log.d("On", "Clicked");
-    }
+
 }
 
 
