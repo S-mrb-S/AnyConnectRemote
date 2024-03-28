@@ -14,10 +14,10 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import sp.anyconnectremote.R;
+import sp.anyconnectremote.data.Global;
 import sp.anyconnectremote.databinding.ActivityMainBinding;
 import sp.anyconnectremote.service.RemoteAccessibilityService;
 import sp.anyconnectremote.ui.misc.BaseActivity;
-import sp.anyconnectremote.util.LogManager;
 
 public class MainActivity extends BaseActivity {
 
@@ -28,14 +28,15 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        showToast("Resume");
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             try {
                 AccessibilityManager accessibilityManager = (AccessibilityManager) getSystemService(Context.ACCESSIBILITY_SERVICE);
                 isServiceConnect = accessibilityManager.isEnabled();
             } catch (Exception e) {
-                LogManager.logCat("[0] Error finding setting, default accessibility to not found: "
-                        + e.getMessage());
+                Global.logManager.logCat("[0] Error finding setting, default accessibility to not found: "
+                        + e.getMessage(), true);
             }
         } else {
             isServiceConnect = underMApi();
@@ -72,15 +73,13 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        isServiceConnectText = getResources().getString(R.string.default_none);
-
         binding.isConnectServiceButton.setOnClickListener(v -> {
             try {
                 Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
                 startActivity(intent);
             } catch (Exception e) {
-                LogManager.logCat("[3] Error finding setting, default accessibility to not found: "
-                        + e.getMessage());
+                Global.logManager.logCat("[3] Error finding setting, default accessibility to not found: "
+                        + e.getMessage(), true);
             }
         });
     }
@@ -93,8 +92,8 @@ public class MainActivity extends BaseActivity {
             accessibilityEnabled = Settings.Secure.getInt(getApplicationContext().getContentResolver(),
                     android.provider.Settings.Secure.ACCESSIBILITY_ENABLED);
         } catch (Settings.SettingNotFoundException e) {
-            LogManager.logCat("[1] Error finding setting, default accessibility to not found: "
-                    + e.getMessage());
+            Global.logManager.logCat("[1] Error finding setting, default accessibility to not found: "
+                    + e.getMessage(), true);
         }
 
         TextUtils.SimpleStringSplitter mStringColonSplitter = new TextUtils.SimpleStringSplitter(':');
@@ -116,8 +115,8 @@ public class MainActivity extends BaseActivity {
                 }
             }
         } catch (Exception e) {
-            LogManager.logCat("[2] Error finding setting, default accessibility to not found: "
-                    + e.getMessage());
+            Global.logManager.logCat("[2] Error finding setting, default accessibility to not found: "
+                    + e.getMessage(), true);
         }
 
         return isConnectService;
