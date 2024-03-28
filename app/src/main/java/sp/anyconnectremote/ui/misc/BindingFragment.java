@@ -1,4 +1,4 @@
-package sp.anyconnectremote.ui;
+package sp.anyconnectremote.ui.misc;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
