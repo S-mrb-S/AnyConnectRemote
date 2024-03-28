@@ -1,31 +1,22 @@
 package sp.anyconnectremote.service;
 
-import android.accessibilityservice.AccessibilityService;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 
 import java.util.List;
 
-import sp.anyconnectremote.data.Global;
-import sp.anyconnectremote.service.util.MainHelper;
+import sp.anyconnectremote.data.Static;
+import sp.anyconnectremote.service.misc.AccessibilityServiceHelper;
 
 /**
  * by Mehrab
  */
-public class RemoteAccessibilityService extends AccessibilityService {
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-
-        Global.logManager.saveLog("service created!");
-    }
-
+public class RemoteAccessibilityService extends AccessibilityServiceHelper {
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
         AccessibilityNodeInfo source = event.getSource();
-        Log.d("TT", String.valueOf(event.getPackageName().equals("com.cisco.anyconnect.vpn.android.avf")));
+        Log.d("TT", String.valueOf(event.getPackageName().equals(Static.globalData.ciscoPackageName)));
         Log.d("TT2", String.valueOf(event.getEventType() == AccessibilityEvent.TYPE_VIEW_CLICKED));
 
         if (source != null) {
@@ -36,7 +27,7 @@ public class RemoteAccessibilityService extends AccessibilityService {
             if (settingsButtons != null && !settingsButtons.isEmpty()) {
                 AccessibilityNodeInfo settingsButton = settingsButtons.get(0);
                 if (settingsButton != null) {
-                    MainHelper.performClickAction(settingsButton);
+                    performClickAction(settingsButton);
                     Log.d("On", "Peyda shd!!");
                 } else {
                     Log.d("On", "Peyda nshd 2!");
@@ -57,15 +48,4 @@ public class RemoteAccessibilityService extends AccessibilityService {
             Log.d("if", "False!");
         }
     }
-
-    @Override
-    public void onInterrupt() {
-        // متدی که در صورت وقوع وقفه در سرویس فراخوانده می‌شود
-        Log.d("On", "Interput");
-
-    }
-
-
 }
-
-

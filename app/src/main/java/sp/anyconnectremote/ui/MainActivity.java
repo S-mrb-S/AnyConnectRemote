@@ -14,40 +14,35 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import sp.anyconnectremote.R;
-import sp.anyconnectremote.data.Global;
+import sp.anyconnectremote.data.Static;
 import sp.anyconnectremote.databinding.ActivityMainBinding;
 import sp.anyconnectremote.service.RemoteAccessibilityService;
 import sp.anyconnectremote.ui.misc.BaseActivity;
 
 public class MainActivity extends BaseActivity {
-
     private boolean isServiceConnect = false;
     private ActivityMainBinding binding;
-    private String isServiceConnectText = "";
 
     @Override
     protected void onResume() {
         super.onResume();
-        showToast("Resume");
+        Static.globalData.showToast("Resume");
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             try {
                 AccessibilityManager accessibilityManager = (AccessibilityManager) getSystemService(Context.ACCESSIBILITY_SERVICE);
                 isServiceConnect = accessibilityManager.isEnabled();
             } catch (Exception e) {
-                Global.logManager.logCat("[0] Error finding setting, default accessibility to not found: "
+                Static.globalData.logManager.logCat("[0] Error finding setting, default accessibility to not found: "
                         + e.getMessage(), true);
             }
         } else {
             isServiceConnect = underMApi();
         }
 
-        if (isServiceConnect) {
-            isServiceConnectText = getResources().getString(R.string.service_active);
-        } else {
-            isServiceConnectText = getResources().getString(R.string.service_not_active);
-        }
-
+        String isServiceConnectText =
+                isServiceConnect ? getResources().getString(R.string.service_active) :
+                        getResources().getString(R.string.service_not_active);
         binding.isConnectService.setText(isServiceConnectText);
     }
 
@@ -66,10 +61,16 @@ public class MainActivity extends BaseActivity {
             return insets;
         });
 
+        if (isInstalled) {
+            System.out.println("برنامه وجود دارد");
+        } else {
+            System.out.println("برنامه وجود ندارد");
+        }
+
         activityLauncher.setOnActivityResult(result -> {
             if (result.getResultCode() == RESULT_OK) {
                 String value = result.getData() != null ? result.getData().getStringExtra("key") : null;
-                showToast("Received value: " + value);
+                Static.globalData.showToast("Received value: " + value);
             }
         });
 
@@ -78,7 +79,7 @@ public class MainActivity extends BaseActivity {
                 Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
                 startActivity(intent);
             } catch (Exception e) {
-                Global.logManager.logCat("[3] Error finding setting, default accessibility to not found: "
+                Static.globalData.logManager.logCat("[3] Error finding setting, default accessibility to not found: "
                         + e.getMessage(), true);
             }
         });
@@ -92,7 +93,7 @@ public class MainActivity extends BaseActivity {
             accessibilityEnabled = Settings.Secure.getInt(getApplicationContext().getContentResolver(),
                     android.provider.Settings.Secure.ACCESSIBILITY_ENABLED);
         } catch (Settings.SettingNotFoundException e) {
-            Global.logManager.logCat("[1] Error finding setting, default accessibility to not found: "
+            Static.globalData.logManager.logCat("[1] Error finding setting, default accessibility to not found: "
                     + e.getMessage(), true);
         }
 
@@ -115,7 +116,7 @@ public class MainActivity extends BaseActivity {
                 }
             }
         } catch (Exception e) {
-            Global.logManager.logCat("[2] Error finding setting, default accessibility to not found: "
+            Static.globalData.logManager.logCat("[2] Error finding setting, default accessibility to not found: "
                     + e.getMessage(), true);
         }
 

@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.tencent.mmkv.MMKV;
 
-import sp.anyconnectremote.data.Global;
+import sp.anyconnectremote.data.Static;
 
 public class MainViewModel extends ViewModel {
     public final MMKV kv = MMKV.defaultMMKV();
@@ -23,8 +23,8 @@ public class MainViewModel extends ViewModel {
     }
 
     public void retrieveLogData() {
-        if (logData.getValue() == null)
-            logData.setValue(kv.decodeString("log", Global.defaultLogString));
+        if (getCurrentTextLogData() == null)
+            logData.setValue(kv.decodeString("log", Static.globalData.defaultLogString));
     }
 
     public void saveLogData(String newVal) {
@@ -40,8 +40,12 @@ public class MainViewModel extends ViewModel {
     }
 
     public void retrieveServiceStart() {
-        if (isServiceStart.getValue() == null)
+        if (getIsServiceStart() == null)
             isServiceStart.setValue(kv.decodeBool("isServiceStart", false));
+    }
+
+    public Boolean getIsServiceStart() {
+        return isServiceStart.getValue();
     }
 
     public void saveServiceStart(Boolean bool) {
