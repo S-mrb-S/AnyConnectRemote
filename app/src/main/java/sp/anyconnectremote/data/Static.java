@@ -1,9 +1,16 @@
 package sp.anyconnectremote.data;
 
-import androidx.annotation.Nullable;
+import androidx.annotation.NonNull;
 
-// memory leak?
+// Static objects
 public class Static {
-    @Nullable
-    public static Global globalData;
+    private static Global globalData;
+
+    @NonNull
+    public static Global getGlobalData() {
+        if (globalData == null) {
+            globalData = new Global();
+        }
+        return globalData;
+    }
 }
