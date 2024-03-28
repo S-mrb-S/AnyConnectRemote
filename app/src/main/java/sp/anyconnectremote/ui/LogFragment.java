@@ -5,17 +5,14 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.ViewModelProvider;
 
+import sp.anyconnectremote.R;
+import sp.anyconnectremote.data.Global;
 import sp.anyconnectremote.databinding.FragmentLogBinding;
-import sp.anyconnectremote.model.MainViewModel;
 import sp.anyconnectremote.ui.misc.BindingFragment;
 
 /// by Mehrab
 public class LogFragment extends BindingFragment<FragmentLogBinding> {
-
-    private MainViewModel mViewModel;
-
     @Override
     protected FragmentLogBinding getViewBinding() {
         return FragmentLogBinding.inflate(getLayoutInflater());
@@ -26,19 +23,24 @@ public class LogFragment extends BindingFragment<FragmentLogBinding> {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-    }
-
-    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mViewModel.retrieveTextData(); // بازیابی متن از MMKV
-        mViewModel.getTextData().observe(getViewLifecycleOwner(), text -> {
-            // زمانی که مقدار LiveData تغییر کند، این متد فراخوانی می‌شود
-            // در اینجا مقدار TextView را بروز می‌کنیم
+
+        //بازیابی
+        Global.mViewModel.retrieveLogData();
+        Global.mViewModel.retrieveServiceStart();
+
+        //LiveData
+        Global.mViewModel.getLogData().observe(getViewLifecycleOwner(), text -> {
             binding.logText.setText(text);
+        });
+        
+        Global.mViewModel.getServiceStart().observe(getViewLifecycleOwner(), isServiceConnect -> {
+            String isServiceConnectText =
+                    isServiceConnect ? getResources().getString(R.string.service_active) :
+                            getResources().getString(R.string.service_not_active);
+
+            binding.isConnectService.setText(isServiceConnectText);
         });
     }
 }
