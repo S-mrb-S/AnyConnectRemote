@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import sp.anyconnectremote.databinding.FragmentLogBinding;
 import sp.anyconnectremote.model.MainViewModel;
+import sp.anyconnectremote.ui.misc.BindingFragment;
 
 /// by Mehrab
 public class LogFragment extends BindingFragment<FragmentLogBinding> {
