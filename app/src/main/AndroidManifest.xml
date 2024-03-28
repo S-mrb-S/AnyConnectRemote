@@ -10,6 +10,7 @@
 
     <!-- (Intent) -->
     <queries>
+        <!-- Cisco Anyconnect package name -->
         <package android:name="com.cisco.anyconnect.vpn.android.avf" />
         <package android:name="android.permission.QUERY_ALL_PACKAGES" />
 
