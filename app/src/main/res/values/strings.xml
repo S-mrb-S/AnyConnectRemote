@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">AnyConnect Remote</string>
+
+    <string name="service_not_active">The service is not active :(</string>
+    <string name="service_active">The service is active :D</string>
+    <string name="default_none">\?\?</string>
+    <string name="enable_service">Manage service</string>
 </resources>
