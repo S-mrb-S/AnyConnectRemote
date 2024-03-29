@@ -7,9 +7,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
-import sp.anyconnectremote.MainApplication;
 import sp.anyconnectremote.model.LogManager;
 import sp.anyconnectremote.model.MainViewModel;
+import sp.anyconnectremote.util.MmkvManager;
 
 // I need some object ;-)
 public class Global {
@@ -17,79 +17,93 @@ public class Global {
     private final String defaultLogString = "** ** ** **";
     @NonNull
     private final String ciscoPackageName = "com.cisco.anyconnect.vpn.android.avf"; // += AndroidManifest
-    @NonNull
-    private final LogManager logManager;
-    @NonNull
-    private final MainViewModel mViewModel;
+
+    private LogManager logManager;
+    private MainViewModel mViewModel;
+    private MmkvManager mmkvStorage;
 
     @Nullable
-    private MainApplication mainApplication;
+    private Application mainApplication;
 
     private boolean isCiscoInstalled = false;
 
     private boolean isImportantErrorBoolean = false;
 
-    public Global() {
-        logManager = new LogManager();
-        mViewModel =
-                new ViewModelProvider.AndroidViewModelFactory((Application) getMainApplication().getApplicationContext()).create(MainViewModel.class);
+    public Global(Application context) {
+        setMainApplication(context);
     }
 
     @NonNull
     public String getDefaultLogString() {
-        return defaultLogString;
+        return this.defaultLogString;
     }
 
     @NonNull
     public String getCiscoPackageName() {
-        return ciscoPackageName;
+        return this.ciscoPackageName;
     }
 
     @NonNull
     public LogManager getLogManager() {
-        return logManager;
+        if (this.logManager == null) {
+            this.logManager = new LogManager();
+        }
+        return this.logManager;
     }
 
     @NonNull
     public MainViewModel getmViewModel() {
-        return mViewModel;
+        if (this.mViewModel == null) {
+            this.mViewModel =
+                    new ViewModelProvider.AndroidViewModelFactory((Application) getMainApplication().getApplicationContext()).create(MainViewModel.class);
+        }
+        return this.mViewModel;
     }
 
     @NonNull
-    public MainApplication getMainApplication() {
-        assert mainApplication != null;
-        return mainApplication;
+    public MmkvManager getMmkvStorage() {
+        if (mmkvStorage == null) {
+            mmkvStorage = new MmkvManager();
+        }
+        return mmkvStorage;
     }
 
-    public void setMainApplication(@NonNull MainApplication mainApplication) {
+    @NonNull
+    public Application getMainApplication() {
+        assert this.mainApplication != null;
+        return this.mainApplication;
+    }
+
+    public void setMainApplication(@NonNull Application mainApplication) {
         this.mainApplication = mainApplication;
     }
 
     public boolean isImportantErrorBoolean() {
-        return isImportantErrorBoolean;
+        return this.isImportantErrorBoolean;
     }
 
     public void setImportantErrorBoolean(boolean importantErrorBoolean) {
-        isImportantErrorBoolean = importantErrorBoolean;
+        this.isImportantErrorBoolean = importantErrorBoolean;
     }
 
     /**
      * @return Cisco package
      */
     public boolean isCiscoInstalled() {
-        return isCiscoInstalled;
+        return this.isCiscoInstalled;
     }
 
     public void setCiscoInstalled(boolean ciscoInstalled) {
-        isCiscoInstalled = ciscoInstalled;
+        this.isCiscoInstalled = ciscoInstalled;
     }
 
     public void showToast(String msg) {
         try {
+
             Toast.makeText(getMainApplication(), msg, Toast.LENGTH_LONG).show();
             getLogManager().saveLog("(toast) msg: " + msg);
         } catch (Exception e) {
-            logManager.logCat("showToast is broken: " + e, true);
+            getLogManager().logCat("showToast is broken: " + e, true);
         }
     }
 }

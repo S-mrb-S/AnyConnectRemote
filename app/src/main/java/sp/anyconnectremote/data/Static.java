@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 
 // Static objects
 public class Static {
+    // All data
     private static Global globalData;
 
     @NonNull
@@ -14,7 +15,8 @@ public class Static {
         return globalData;
     }
 
-    public static void setGlobalData(Application context) {
+    public static void setGlobalData(@NonNull Application context) {
+        // is should be to null
         assert globalData == null;
         globalData = new Global(context);
     }
