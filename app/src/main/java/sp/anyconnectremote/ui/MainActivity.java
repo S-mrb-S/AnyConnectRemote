@@ -14,6 +14,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import sp.anyconnectremote.R;
+import sp.anyconnectremote.data.Global;
 import sp.anyconnectremote.data.Static;
 import sp.anyconnectremote.databinding.ActivityMainBinding;
 import sp.anyconnectremote.service.RemoteAccessibilityService;
@@ -22,18 +23,18 @@ import sp.anyconnectremote.ui.misc.BaseActivity;
 public class MainActivity extends BaseActivity {
     private boolean isServiceConnect = false;
     private ActivityMainBinding binding;
+    private final Global data = Static.getGlobalData();
 
     @Override
     protected void onResume() {
         super.onResume();
-        Static.globalData.showToast("Resume");
-
+        data.showToast("Resume");
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             try {
                 AccessibilityManager accessibilityManager = (AccessibilityManager) getSystemService(Context.ACCESSIBILITY_SERVICE);
                 isServiceConnect = accessibilityManager.isEnabled();
             } catch (Exception e) {
-                Static.globalData.logManager.logCat("[0] Error finding setting, default accessibility to not found: "
+                data.getLogManager().logCat("[0] Error finding setting, default accessibility to not found: "
                         + e.getMessage(), true);
             }
         } else {
@@ -44,6 +45,12 @@ public class MainActivity extends BaseActivity {
                 isServiceConnect ? getResources().getString(R.string.service_active) :
                         getResources().getString(R.string.service_not_active);
         binding.isConnectService.setText(isServiceConnectText);
+
+        if (data.isCiscoInstalled()) {
+            data.showToast("Welcome!");
+        } else {
+            System.out.println("Cisco Anyconnect not found!");
+        }
     }
 
     @Override
@@ -61,16 +68,10 @@ public class MainActivity extends BaseActivity {
             return insets;
         });
 
-        if (isInstalled) {
-            System.out.println("برنامه وجود دارد");
-        } else {
-            System.out.println("برنامه وجود ندارد");
-        }
-
         activityLauncher.setOnActivityResult(result -> {
             if (result.getResultCode() == RESULT_OK) {
                 String value = result.getData() != null ? result.getData().getStringExtra("key") : null;
-                Static.globalData.showToast("Received value: " + value);
+                data.showToast("Received value: " + value);
             }
         });
 
@@ -79,7 +80,7 @@ public class MainActivity extends BaseActivity {
                 Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
                 startActivity(intent);
             } catch (Exception e) {
-                Static.globalData.logManager.logCat("[3] Error finding setting, default accessibility to not found: "
+                data.getLogManager().logCat("[3] Error finding setting, default accessibility to not found: "
                         + e.getMessage(), true);
             }
         });
@@ -93,7 +94,7 @@ public class MainActivity extends BaseActivity {
             accessibilityEnabled = Settings.Secure.getInt(getApplicationContext().getContentResolver(),
                     android.provider.Settings.Secure.ACCESSIBILITY_ENABLED);
         } catch (Settings.SettingNotFoundException e) {
-            Static.globalData.logManager.logCat("[1] Error finding setting, default accessibility to not found: "
+            data.getLogManager().logCat("[1] Error finding setting, default accessibility to not found: "
                     + e.getMessage(), true);
         }
 
@@ -116,7 +117,7 @@ public class MainActivity extends BaseActivity {
                 }
             }
         } catch (Exception e) {
-            Static.globalData.logManager.logCat("[2] Error finding setting, default accessibility to not found: "
+            data.getLogManager().logCat("[2] Error finding setting, default accessibility to not found: "
                     + e.getMessage(), true);
         }
 
