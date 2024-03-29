@@ -1,15 +1,16 @@
 package sp.anyconnectremote.model;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.tencent.mmkv.MMKV;
-
 import sp.anyconnectremote.data.Static;
+import sp.anyconnectremote.util.MmkvManager;
 
 public class MainViewModel extends ViewModel {
-    public final MMKV kv = MMKV.defaultMMKV();
+
+    MmkvManager mmkvStorage = Static.getGlobalData().getMmkvStorage();
 
     // log list
     private final MutableLiveData<String> logData = new MutableLiveData<>();
@@ -24,11 +25,11 @@ public class MainViewModel extends ViewModel {
 
     public void retrieveLogData() {
         if (getCurrentTextLogData() == null)
-            logData.setValue(kv.decodeString("log", Static.globalData.defaultLogString));
+            logData.setValue(mmkvStorage.getLogValue());
     }
 
-    public void saveLogData(String newVal) {
-        kv.encode("log", newVal);
+    public void saveLogData(@NonNull String newVal) {
+        mmkvStorage.setLogValue(newVal);
         logData.setValue(newVal);
     }
 
@@ -41,15 +42,15 @@ public class MainViewModel extends ViewModel {
 
     public void retrieveServiceStart() {
         if (getIsServiceStart() == null)
-            isServiceStart.setValue(kv.decodeBool("isServiceStart", false));
+            isServiceStart.setValue(mmkvStorage.getIsServiceValue());
     }
 
     public Boolean getIsServiceStart() {
         return isServiceStart.getValue();
     }
 
-    public void saveServiceStart(Boolean bool) {
-        kv.encode("isServiceStart", bool);
+    public void saveServiceStart(@NonNull Boolean bool) {
+        mmkvStorage.setIsServiceValue(bool);
         isServiceStart.setValue(bool);
     }
 }
