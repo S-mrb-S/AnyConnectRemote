@@ -1,6 +1,5 @@
 package sp.anyconnectremote;
 
-import android.content.pm.PackageManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -42,21 +41,10 @@ public class MainApplication extends MultiDexApplication {
             data.getmViewModel().retrieveLogData();
             data.getmViewModel().retrieveServiceStart();
 
-            data.setCiscoInstalled(isAppInstalled(data.getCiscoPackageName()));
         } catch (Exception e) {
             Log.d("MainApplication", "ERROR: " + e);
             Toast.makeText(this, "Error found!", Toast.LENGTH_SHORT).show();
             data.setImportantErrorBoolean(true);
-        }
-    }
-
-    private boolean isAppInstalled(String packageName) {
-        PackageManager packageManager = this.getPackageManager();
-        try {
-            packageManager.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
-            return true;
-        } catch (PackageManager.NameNotFoundException e) {
-            return false;
         }
     }
 
