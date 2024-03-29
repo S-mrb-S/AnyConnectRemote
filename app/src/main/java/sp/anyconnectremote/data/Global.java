@@ -1,6 +1,7 @@
 package sp.anyconnectremote.data;
 
 import android.app.Application;
+import android.content.pm.PackageManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,8 +25,6 @@ public class Global {
 
     @Nullable
     private Application mainApplication;
-
-    private boolean isCiscoInstalled = false;
 
     private boolean isImportantErrorBoolean = false;
 
@@ -86,20 +85,48 @@ public class Global {
         this.isImportantErrorBoolean = importantErrorBoolean;
     }
 
-    /**
-     * @return Cisco package
-     */
-    public boolean isCiscoInstalled() {
-        return this.isCiscoInstalled;
+    //    java17
+    public record CiscoInstallationStatus(boolean appInstalled, boolean permissionsEnabled) {
     }
 
-    public void setCiscoInstalled(boolean ciscoInstalled) {
-        this.isCiscoInstalled = ciscoInstalled;
+    public CiscoInstallationStatus getCiscoInstallationStatus() {
+        PackageManager packageManager = this.getMainApplication().getPackageManager();
+        boolean appInstalled = isAppInstalled(packageManager);
+        boolean permissionsEnabled = isPermissionGranted(packageManager);
+        return new CiscoInstallationStatus(appInstalled, permissionsEnabled);
+    }
+
+    private boolean isAppInstalled(PackageManager packageManager) {
+        try {
+            packageManager.getPackageInfo(this.ciscoPackageName, PackageManager.GET_ACTIVITIES);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+    }
+
+    //    private boolean isPermissionsEnabled(PackageManager packageManager) {
+//        try {
+//            PackageInfo packageInfo = packageManager.getPackageInfo(this.ciscoPackageName, PackageManager.GET_PERMISSIONS);
+//            if (packageInfo == null) {
+//                this.getLogManager().saveLog("isPermissionsEnabled: empty");
+//                return false;
+//            }
+//            String[] requestedPermissions = packageInfo.requestedPermissions;
+//            this.getLogManager().saveLog("isPermissionsEnabled: " + Arrays.toString(requestedPermissions));
+//            return requestedPermissions != null && requestedPermissions.length > 0;
+//        } catch (PackageManager.NameNotFoundException ex) {
+//            return false;
+//        }
+//    }
+    private boolean isPermissionGranted(PackageManager packageManager) {
+        int result = packageManager.checkPermission("android.permission.POST_NOTIFICATIONS", this.ciscoPackageName);
+        this.getLogManager().saveLog("isPermissionsEnabled: " + result);
+        return result == PackageManager.PERMISSION_GRANTED;
     }
 
     public void showToast(String msg) {
         try {
-
             Toast.makeText(getMainApplication(), msg, Toast.LENGTH_LONG).show();
             getLogManager().saveLog("(toast) msg: " + msg);
         } catch (Exception e) {
