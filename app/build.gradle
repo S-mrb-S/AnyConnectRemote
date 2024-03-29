@@ -22,6 +22,8 @@ android {
         }
     }
 
+    flavorDimensions = ["default"]
+
     productFlavors {
         // Includes settings you want to keep only while developing your app.
         dev {
