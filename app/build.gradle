@@ -29,6 +29,7 @@ android {
             // Android Studio 2.3 or higher, the IDE enables pre-dexing
             // when deploying your app to a device running Android 5.0
             // (API level 21) or higher, regardless of minSdkVersion.
+            //noinspection DevModeObsolete
             minSdk 21
         }
         prod {
