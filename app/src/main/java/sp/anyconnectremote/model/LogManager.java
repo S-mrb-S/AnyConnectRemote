@@ -7,29 +7,25 @@ import java.util.Date;
 import java.util.Locale;
 
 import sp.anyconnectremote.BuildConfig;
+import sp.anyconnectremote.data.Global;
 import sp.anyconnectremote.data.Static;
 
 public class LogManager {
+    private final Global data = Static.getGlobalData();
 
     public void saveLog(String str) {
-        // No thread work in ViewModel
-//        ExecutorService executor = Executors.newFixedThreadPool(2);
-//        executor.execute(() -> {
-//        });
-//        executor.shutdown();
-
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z", Locale.getDefault());
             String currentDateAndTime = sdf.format(new Date());
 
-            String resultLog = Static.globalData.mViewModel.getCurrentTextLogData() +
+            String resultLog = data.getmViewModel().getCurrentTextLogData() +
                     "\n" +
                     "Log[" +
                     currentDateAndTime +
                     "]: " +
                     str;
 
-            Static.globalData.mViewModel.saveLogData(resultLog);
+            data.getmViewModel().saveLogData(resultLog);
 
             logCat("Log saved: " + str);
         } catch (Exception e) {
