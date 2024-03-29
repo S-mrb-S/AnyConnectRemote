@@ -14,6 +14,7 @@ android {
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
 
+        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         ndk {
@@ -21,10 +22,28 @@ android {
         }
     }
 
+    productFlavors {
+        // Includes settings you want to keep only while developing your app.
+        dev {
+            // Enables pre-dexing for command-line builds. When using
+            // Android Studio 2.3 or higher, the IDE enables pre-dexing
+            // when deploying your app to a device running Android 5.0
+            // (API level 21) or higher, regardless of minSdkVersion.
+            minSdk 21
+        }
+        prod {
+            // If you've configured the defaultConfig block for the production version of
+            // your app, you can leave this block empty and Gradle uses configurations in
+            // the defaultConfig block instead. You still need to include this flavor.
+            // Otherwise, all variants use the "dev" flavor configurations.
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled rootProject.ext.minifyEnabled
             shrinkResources rootProject.ext.shrinkResources
+            crunchPngs false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
@@ -76,7 +95,6 @@ android {
 }
 
 dependencies {
-
     implementation libs.appcompat
     implementation libs.material
     implementation libs.activity
@@ -85,6 +103,7 @@ dependencies {
     implementation libs.preference
     implementation libs.lifecycle.livedata.ktx
     implementation libs.lifecycle.viewmodel.ktx
+    implementation libs.multidex
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core

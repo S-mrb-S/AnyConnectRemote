@@ -1,9 +1,10 @@
 package sp.anyconnectremote;
 
-import android.app.Application;
 import android.content.pm.PackageManager;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.multidex.MultiDexApplication;
 
 import com.tencent.mmkv.MMKV;
 
@@ -14,7 +15,7 @@ import sp.anyconnectremote.util.UncaughtExceptionHandler;
 /*
 March 28, 2024
  */
-public class MainApplication extends Application {
+public class MainApplication extends MultiDexApplication {
     private Global data;
 
     @Override
@@ -30,7 +31,7 @@ public class MainApplication extends Application {
                 MMKV.initialize(this);
                 Static.setGlobalData(this);
                 data = Static.getGlobalData();
-            } catch (Exception e) {
+            } catch (AssertionError | Exception e) {
                 Toast.makeText(this, "Error found!", Toast.LENGTH_SHORT).show();
                 data.setImportantErrorBoolean(true);
             }
@@ -62,6 +63,11 @@ public class MainApplication extends Application {
     @Override
     public void onLowMemory() {
         super.onLowMemory();
+        try {
+            data.setImportantErrorBoolean(true);
+            data.getLogManager().saveLog("Memory is low! all processes is killed");
+        } catch (Exception | AssertionError ignore) {
+        }
 
         Toast.makeText(this, "Warning! your memory is low!", Toast.LENGTH_LONG).show();
     }

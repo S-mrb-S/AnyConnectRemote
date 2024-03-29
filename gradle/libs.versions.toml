@@ -11,6 +11,7 @@ mmkv = "1.3.4"
 preference = "1.2.1"
 lifecycleLivedataKtx = "2.7.0"
 lifecycleViewmodelKtx = "2.7.0"
+multidex = "2.0.1"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -24,6 +25,7 @@ mmkv = { group = "com.tencent", name = "mmkv", version.ref = "mmkv" }
 preference = { group = "androidx.preference", name = "preference", version.ref = "preference" }
 lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
 lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
+multidex = { group = "androidx.multidex", name = "multidex", version.ref = "multidex" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
