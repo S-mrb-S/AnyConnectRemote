@@ -10,8 +10,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewbinding.ViewBinding;
 
+import sp.anyconnectremote.data.Global;
+import sp.anyconnectremote.data.Static;
+
 public abstract class BindingFragment<T extends ViewBinding> extends Fragment {
     protected T binding;
+    protected final Global data = Static.getGlobalData();
 
     protected abstract T getViewBinding();
 

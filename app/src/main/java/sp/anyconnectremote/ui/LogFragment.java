@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import sp.anyconnectremote.R;
-import sp.anyconnectremote.data.Static;
 import sp.anyconnectremote.databinding.FragmentLogBinding;
 import sp.anyconnectremote.ui.misc.BindingFragment;
 
@@ -27,11 +26,11 @@ public class LogFragment extends BindingFragment<FragmentLogBinding> {
         super.onViewCreated(view, savedInstanceState);
 
         //LiveData
-        Static.globalData.mViewModel.getLogData().observe(getViewLifecycleOwner(), text -> {
+        data.getmViewModel().getLogData().observe(getViewLifecycleOwner(), text -> {
             binding.logText.setText(text);
         });
 
-        Static.globalData.mViewModel.getServiceStart().observe(getViewLifecycleOwner(), isServiceConnect -> {
+        data.getmViewModel().getServiceStart().observe(getViewLifecycleOwner(), isServiceConnect -> {
             String isServiceConnectText =
                     isServiceConnect ? getResources().getString(R.string.service_active) :
                             getResources().getString(R.string.service_not_active);
