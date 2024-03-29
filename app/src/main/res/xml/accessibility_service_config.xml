@@ -1,17 +1,10 @@
-<!--<accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    android:accessibilityEventTypes="typeAllMask"-->
-<!--    android:accessibilityFeedbackType="feedbackSpoken"-->
-<!--    android:notificationTimeout="100"-->
-<!--    android:canRetrieveWindowContent="true" />-->
-
 <accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
     android:description="@string/accessibility_service_description"
-    android:packageNames="sp.anyconnectremote"
+    android:packageNames="com.cisco.anyconnect.vpn.android.avf"
     android:accessibilityEventTypes="typeAllMask"
-    android:accessibilityFlags="flagDefault"
-    android:accessibilityFeedbackType="feedbackSpoken"
+    android:accessibilityFeedbackType="feedbackAllMask"
+    android:accessibilityFlags="flagDefault|flagIncludeNotImportantViews|flagReportViewIds"
     android:notificationTimeout="100"
     android:canRetrieveWindowContent="true"
+    android:canRequestTouchExplorationMode="true"
     android:settingsActivity="sp.anyconnectremote.ui.LogActivity" />
-
-    <!-- ? -->
