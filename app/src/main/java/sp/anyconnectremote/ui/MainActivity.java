@@ -92,6 +92,11 @@ public class MainActivity extends BaseActivity {
         });
     }
 
+    /**
+     * Test it
+     *
+     * @return ??
+     */
     private boolean underMApi() {
         int accessibilityEnabled = 0;
         boolean isConnectService = false;
