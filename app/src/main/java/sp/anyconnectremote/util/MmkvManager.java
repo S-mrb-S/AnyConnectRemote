@@ -42,6 +42,12 @@ public class MmkvManager {
         this.logValue = logValue;
     }
 
+    public void cleanLogValue() {
+        kv.encode(logKey, "");
+        this.logValue = "";
+
+        Static.getGlobalData().showToast("CLEANED");
+    }
 
     @NonNull
     public synchronized Boolean getIsServiceValue() {
