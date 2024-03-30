@@ -54,6 +54,7 @@
 
         <activity
             android:name=".ui.MainActivity"
+            android:launchMode="singleTop"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -67,6 +68,7 @@
             android:exported="true"
             android:label="Logs manager"
             android:excludeFromRecents="true"
+            android:launchMode="singleTop"
             android:icon="@mipmap/ic_launcher">
             <intent-filter>
                 <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
@@ -76,10 +78,13 @@
         </activity>
 
         <!-- Main Service -->
+        <!-- Keep safe -->
         <service
             android:name=".service.RemoteAccessibilityService"
             android:enabled="true"
             android:exported="true"
+            android:logo="@drawable/ic_launcher_foreground"
+            android:isolatedProcess="true"
             android:label="Cisco Remote"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter>
