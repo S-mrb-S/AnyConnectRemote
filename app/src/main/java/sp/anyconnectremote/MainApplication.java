@@ -53,6 +53,7 @@ public class MainApplication extends MultiDexApplication {
         super.onLowMemory();
         try {
             data.setImportantErrorBoolean(true);
+            //Static.getGlobalData().getLogManager(). // kill memory usage
             data.getLogManager().saveLog("Memory is low! all processes is killed");
         } catch (Exception | AssertionError ignore) {
         }
