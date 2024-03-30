@@ -54,7 +54,7 @@ public abstract class AccessibilityServiceHelper extends AccessibilityService {
             if (child != null) {
                 // در اینجا می‌توانید دکمه‌ها و button ها را شناسایی و با آن‌ها کار کنید
                 if (child.getClassName() != null && child.getClassName().toString().equals("android.widget.Button")) {
-                    data.getLogManager().saveLog("* Button found: " + child.toString());
+                    data.getLogManager().saveLog("* Button found: " + child);
                 }
                 traverseViews(child);
             }
