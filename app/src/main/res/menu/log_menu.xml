@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/clear_all"
+        android:icon="@drawable/mop"
+        android:title="Clear all log"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/goto_main"
+        android:title="Go to main"
+        app:showAsAction="always" />
+</menu>
