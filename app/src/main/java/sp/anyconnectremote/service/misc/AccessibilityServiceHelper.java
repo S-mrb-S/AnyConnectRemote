@@ -5,6 +5,7 @@ import android.view.accessibility.AccessibilityNodeInfo;
 
 import androidx.core.app.NotificationManagerCompat;
 
+import sp.anyconnectremote.AppConfig;
 import sp.anyconnectremote.data.Global;
 import sp.anyconnectremote.data.Static;
 
@@ -27,7 +28,7 @@ public abstract class AccessibilityServiceHelper extends AccessibilityService {
 ////        info.packageNames = new String[]{data.getCiscoPackageName()};
 //        setServiceInfo(info);
 
-        data.getLogManager().saveLog("* Service connected! set package to: " + data.getCiscoPackageName());
+        data.getLogManager().saveLog("* Service connected! set package to: " + AppConfig.ciscoPackageName);
         // سرویس فعال شده است، نمایش یک Notification
         //showNotification();
     }

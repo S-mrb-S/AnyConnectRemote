@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import sp.anyconnectremote.AppConfig;
 import sp.anyconnectremote.data.Static;
 import sp.anyconnectremote.util.MmkvManager;
 
@@ -35,7 +36,7 @@ public class MainViewModel extends ViewModel {
 
     public void cleanLogData() {
         mmkvStorage.cleanLogValue();
-        logData.setValue(Static.getGlobalData().getDefaultLogString());
+        logData.setValue(AppConfig.defaultLogString);
     }
 
     // service boolean

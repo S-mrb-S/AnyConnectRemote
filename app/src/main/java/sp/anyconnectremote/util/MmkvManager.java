@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.tencent.mmkv.MMKV;
 
+import sp.anyconnectremote.AppConfig;
 import sp.anyconnectremote.data.Static;
 
 // by Mehrab
@@ -23,11 +24,11 @@ public class MmkvManager {
         isServiceValue = kv.decodeBool(isServiceKey, false);
 
         try {
-            String newValue = kv.decodeString(logKey, Static.getGlobalData().getDefaultLogString());
+            String newValue = kv.decodeString(logKey, AppConfig.defaultLogString);
             assert newValue != null;
             logValue = newValue;
         } catch (NullPointerException | AssertionError e) {
-            logValue = Static.getGlobalData().getDefaultLogString();
+            logValue = AppConfig.defaultLogString;
         }
     }
 //    synchronized
