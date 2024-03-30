@@ -33,6 +33,11 @@ public class MainViewModel extends ViewModel {
         logData.setValue(newVal);
     }
 
+    public void cleanLogData() {
+        mmkvStorage.cleanLogValue();
+        logData.setValue(Static.getGlobalData().getDefaultLogString());
+    }
+
     // service boolean
     private final MutableLiveData<Boolean> isServiceStart = new MutableLiveData<>();
 

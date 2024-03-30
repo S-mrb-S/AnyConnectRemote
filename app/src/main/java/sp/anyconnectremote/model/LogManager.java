@@ -33,6 +33,10 @@ public class LogManager {
         }
     }
 
+    public void cleanLog() {
+        data.getmViewModel().cleanLogData();
+    }
+
     public void logCat(String str) {
         logCat(str, false); // Default value for e is false
     }
