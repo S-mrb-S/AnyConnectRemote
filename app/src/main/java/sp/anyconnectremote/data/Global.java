@@ -5,7 +5,6 @@ import android.content.pm.PackageManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import sp.anyconnectremote.AppConfig;
@@ -14,14 +13,7 @@ import sp.anyconnectremote.model.MainViewModel;
 import sp.anyconnectremote.util.MmkvManager;
 
 // I need some object ;-)
-public class Global {
-    private LogManager logManager;
-    private MainViewModel mViewModel;
-    private MmkvManager mmkvStorage;
-    @Nullable
-    private Application mainApplication;
-    private boolean isImportantErrorBoolean = false;
-
+public class Global extends GlobalHelper {
     public Global(Application context) {
         setMainApplication(context);
     }
@@ -69,7 +61,12 @@ public class Global {
         this.isImportantErrorBoolean = importantErrorBoolean;
     }
 
-    //    java17
+    /**
+     * Java +17
+     *
+     * @param appInstalled
+     * @param permissionsEnabled
+     */
     public record CiscoInstallationStatus(boolean appInstalled, boolean permissionsEnabled) {
     }
 
@@ -95,6 +92,11 @@ public class Global {
         return result == PackageManager.PERMISSION_GRANTED;
     }
 
+    /**
+     * Global
+     *
+     * @param msg Text message
+     */
     public void showToast(String msg) {
         try {
             Toast.makeText(this.getMainApplication(), msg, Toast.LENGTH_LONG).show();
