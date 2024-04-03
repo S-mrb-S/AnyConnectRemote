@@ -3,8 +3,13 @@
 
     <string name="service_not_active">The service is not active :(</string>
     <string name="service_active">The service is active :D</string>
+
+    <string name="cisco_not_found">Cisco application not found! Please install it first</string>
+    <string name="cisco_access_permissions">Cisco application found! Please give it access to the notifications permission</string>
+
     <string name="default_none">\?\?</string>
     <string name="enable_service">Manage service</string>
+    <string name="enable_enable_notifications">Enable notifications</string>
 
     <string name="accessibility_service_description">Cisco Anyconnect remote control</string>
 </resources>

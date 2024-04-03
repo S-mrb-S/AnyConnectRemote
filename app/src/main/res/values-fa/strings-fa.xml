@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AnyConnect Remote</string>
+
+    <string name="service_not_active">سرویس فعال نیست :(</string>
+    <string name="service_active">سرویس فعال شده است :D</string>
+
+    <string name="cisco_not_found">برنامه Cisco یافت نشد! لطفا ان را در ابتدا نصب کنید</string>
+    <string name="cisco_access_permissions">برنامه Cisco یافت شد! لطفا دسترسی اعلان ها را بدهید</string>
+
+    <string name="default_none">\?\?</string>
+    <string name="enable_service">مدیریت سرویس</string>
+    <string name="enable_enable_notifications">فعال کردن اعلان ها</string>
+
+    <string name="accessibility_service_description">Cisco Anyconnect remote control</string>
+</resources>

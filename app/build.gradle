@@ -98,6 +98,8 @@ android {
 }
 
 dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.aar', '*.jar'], exclude: [])
+
     implementation libs.appcompat
     implementation libs.material
     implementation libs.activity

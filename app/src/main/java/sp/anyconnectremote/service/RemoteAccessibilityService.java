@@ -19,6 +19,8 @@ public class RemoteAccessibilityService extends AccessibilityServiceHelper {
             data.getLogManager().saveLog("Service canceled");
             return;
         }
+
+//        disableSelf();
 //        AccessibilityNodeInfo source = event.getSource();
 //        Log.d("TT", String.valueOf(event.getPackageName().equals(data.getCiscoPackageName())));
 //        Log.d("TT2", String.valueOf(event.getEventType() == AccessibilityEvent.TYPE_VIEW_CLICKED));
