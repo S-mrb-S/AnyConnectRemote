@@ -46,6 +46,8 @@ public class MainActivity extends BaseActivity {
                         getResources().getString(R.string.service_not_active);
         binding.isConnectService.setText(isServiceConnectText);
 
+        //new com.cisco.;
+
 //         java17
         Global.CiscoInstallationStatus status = data.getCiscoInstallationStatus();
         boolean appInstalled = status.appInstalled();

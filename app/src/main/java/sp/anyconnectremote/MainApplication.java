@@ -3,8 +3,7 @@ package sp.anyconnectremote;
 import android.util.Log;
 import android.widget.Toast;
 
-import androidx.multidex.MultiDexApplication;
-
+import com.cisco.anyconnect.vpn.android.ui.helpers.GlobalAppHelpers;
 import com.tencent.mmkv.MMKV;
 
 import sp.anyconnectremote.data.Global;
@@ -14,7 +13,7 @@ import sp.anyconnectremote.util.UncaughtExceptionHandler;
 /*
 March 28, 2024
  */
-public class MainApplication extends MultiDexApplication {
+public class MainApplication extends GlobalAppHelpers {
     private Global data;
 
     @Override
@@ -46,25 +45,5 @@ public class MainApplication extends MultiDexApplication {
             Toast.makeText(this, "Error found!", Toast.LENGTH_SHORT).show();
             data.setImportantErrorBoolean(true);
         }
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        try {
-            data.setImportantErrorBoolean(true);
-            //Static.getGlobalData().getLogManager(). // kill memory usage
-            data.getLogManager().saveLog("Memory is low! all processes is killed");
-        } catch (Exception | AssertionError ignore) {
-        }
-
-        Toast.makeText(this, "Warning! your memory is low!", Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onTerminate() {
-        super.onTerminate();
-        // Cleanup or perform final operations here before the application terminates
-        Log.d("CustomApplication", "Application onTerminate() called");
     }
 }
